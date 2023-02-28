@@ -9,6 +9,7 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     * 作成したシーダークラスは本メソッド内でcallする
      */
     public function run(): void
     {
@@ -18,5 +19,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        //
+        $this->call([TweetsSeeder::class]);
     }
 }
