@@ -23,7 +23,7 @@ class IndexController extends Controller
     {
         $tweets = Tweet::orderBy('created_at', 'DESC')->get();
         // dd = dump,die Laravel独自ヘルパー関数
-        dd($tweets);
+        // dd($tweets);
 
         // bladeファイルの呼び出し方は主に3種類
         // return view('tweet.index', ['name' => 'laravel']);

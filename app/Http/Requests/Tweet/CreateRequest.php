@@ -32,7 +32,8 @@ class CreateRequest extends FormRequest
      * 送信されたtweetを取得する
      * 
     */
-    public function tweet() {
+    public function tweet() : string
+    {
         // input(取得する名前, デフォルト値)
         // 必須なのでデフォルト値は不要
         return $this->input('tweet');
