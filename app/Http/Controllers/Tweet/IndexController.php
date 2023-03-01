@@ -19,11 +19,11 @@ class IndexController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, Factory $factory)
+    public function __invoke(Request $request)
     {
-        $tweets = Tweet::all();
+        $tweets = Tweet::orderBy('created_at', 'DESC')->get();
         // dd = dump,die Laravel独自ヘルパー関数
-        // dd($tweets);
+        dd($tweets);
 
         // bladeファイルの呼び出し方は主に3種類
         // return view('tweet.index', ['name' => 'laravel']);
