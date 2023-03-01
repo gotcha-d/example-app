@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Tweet;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tweet;
-
+use App\Services\TweetService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\Factory;
@@ -19,16 +19,10 @@ class IndexController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, TweetService $tweetService)
     {
-        $tweets = Tweet::orderBy('created_at', 'DESC')->get();
-        // dd = dump,die Laravel独自ヘルパー関数
-        // dd($tweets);
+        $tweets = $tweetService->getTweets();
 
-        // bladeファイルの呼び出し方は主に3種類
-        // return view('tweet.index', ['name' => 'laravel']);
-        // return View::make('tweet.index', ['name' => 'ララベル']);
-        // return $factory->make('tweet.index', ['name' => 'ララベル']);
         return view('tweet.index')
             ->with('tweets', $tweets);        
     }
