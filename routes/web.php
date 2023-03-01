@@ -26,3 +26,11 @@ Route::get('/tweet',\App\Http\Controllers\Tweet\IndexController::class)
 
 Route::post('/tweet/create', \App\Http\Controllers\Tweet\CreateController::class)
 ->name('tweet.create');
+
+// tweetIdは整数値だけを受け付ける
+// RouteServiceProvider.phpにて設定する
+Route::get('/tweet/{tweetId}', \App\Http\Controllers\Tweet\Update\IndexController::class)
+->name('tweet.update.index');
+
+Route::put('/tweet/{tweetId}', \App\Http\Controllers\Tweet\Update\PutController::class)
+->name('tweet.update.put');
