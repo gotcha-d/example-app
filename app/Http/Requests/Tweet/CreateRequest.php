@@ -38,4 +38,13 @@ class CreateRequest extends FormRequest
         // 必須なのでデフォルト値は不要
         return $this->input('tweet');
     }
+
+    /**
+     * ユーザーIDを取得する
+     */
+    public function userId() : int
+    {
+        // Requsetクラスのuser関数は、現在ログイン中のユーザー情報を返却する
+        return $this->user()->id;
+    }
 }

@@ -41,4 +41,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function tweets()
+    {
+        // Eloquent は、tweetsテーブルから「主テーブル名_id」を自動で探してデータを取得する
+        return $this->hasMany(Tweet::class, 'user_id');
+    }
 }

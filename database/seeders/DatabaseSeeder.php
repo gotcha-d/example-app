@@ -20,6 +20,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         //
-        $this->call([TweetsSeeder::class]);
+        // ユーザー作成後にツイートを登録する順番は守る
+        $this->call(
+            [
+                UsersSeeder::class,
+                TweetsSeeder::class
+            ]
+        );
     }
 }
