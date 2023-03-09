@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Tweet;
+use Carbon\Carbon;
 
 class TweetService
 {
@@ -23,6 +24,19 @@ class TweetService
         }
 
         return $tweet->user_id === $userId;
+    }
+
+    /**
+     * 前日のつぶやき数を集計する
+     */
+    public function countYesterdayTweets()
+    {
+        $strToday = Carbon::today()->toDateTimeString();
+        $strYeasterday = Carbon::yesterday()->toDateTimeString();
+        // 年月日の比較には、where ではなく、whereDateを利用
+        return Tweet::whereDate('created_at', '>=', $strYeasterday)
+            ->whereDate('created_at', '<', $strToday)
+            ->count();
     }
 }
 
