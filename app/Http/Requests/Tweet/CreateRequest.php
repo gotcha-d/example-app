@@ -24,7 +24,9 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tweet' => 'required|max:140' // 必須かつ140文字以下
+            'tweet' => 'required|max:140', // 必須かつ140文字以下
+            'images' => 'array|max:4', // 任意 最大4つまで
+            'images.*' => 'required|image|mimes:jpeg,png,gif|max:2048' // 最大2MB
         ];
     }
 
@@ -46,5 +48,13 @@ class CreateRequest extends FormRequest
     {
         // Requsetクラスのuser関数は、現在ログイン中のユーザー情報を返却する
         return $this->user()->id;
+    }
+
+    /**
+     * 画像を取得する
+     */
+    public function images() : array
+    {
+        return $this->file('images', []);
     }
 }

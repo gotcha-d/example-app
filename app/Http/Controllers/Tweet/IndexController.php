@@ -23,6 +23,9 @@ class IndexController extends Controller
     {
         $tweets = $tweetService->getTweets();
 
+        // クエリ実行回数、tweetモデルのrelationsプロパティにimages配列が追加されていることの確認用
+        // dump($tweets);
+        // app(\App\Exceptions\Handler::class)->render(request(), throw new \Error('dumpreport.'));
         return view('tweet.index')
             ->with('tweets', $tweets);        
     }

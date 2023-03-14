@@ -12,6 +12,7 @@
                 <!-- eメソッドで、特殊文字をエスケープ -->
                 <!-- nl2brメソッドで、改行コードを<br>タグに変換する -->
                 <p class="text-gray-600">{!! nl2br(e($tweet->content)) !!}</p>
+                <x-tweet.images :images="$tweet->images"></x-tweet.images>
             </div>
             <div>
                 <!-- TODO 編集と削除 -->
