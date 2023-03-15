@@ -27,14 +27,11 @@ jobs:
               MYSQL_USER: '${DB_USERNAME}'
               MYSQL_PASSWORD: '${DB_PASSWORD}'
               MYSQL_ALLOW_EMPTY_PASSWORD: 1
-        healthcheck:
-              test:
-                - CMD
-                - mysqladmin
-                - ping
-                - '-p${DB_PASSWORD}'
-              retries: 2
-              timeout: 5s
+        options: >-
+              --health-cmd "mysqladmin ping"
+              --health-interval 10s
+              --health-timeout 5s
+              --health-retries 5
       
     steps:
       - uses: actions/checkout@v2
