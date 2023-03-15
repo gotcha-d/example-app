@@ -1,0 +1,56 @@
+name: Laravel
+
+# ワークフローを実行するタイミング
+on:
+  push:
+  pull_request:
+
+# テストで利用するための環境変数の設定
+env:
+  DB_USERNAME: sail
+  DB_PASSWORD: password
+  MAIL_FROM_ADDRESS: info@example.com
+
+jobs:
+  # ジョブ
+  phpunit:
+    # ジョブの実行環境の設定
+    runs-on: ubuntu-latest
+    # ジョブに関連して起動するサービスの設定
+    services:
+      mysql.test:
+        image: 'mysql/mysql-server:8.0'
+        environment:
+              MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+              MYSQL_ROOT_HOST: '%'
+              MYSQL_DATABASE: '${DB_DATABASE}'
+              MYSQL_USER: '${DB_USERNAME}'
+              MYSQL_PASSWORD: '${DB_PASSWORD}'
+              MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        healthcheck:
+              test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-p${DB_PASSWORD}'
+              retries: 2
+              timeout: 5s
+      
+      steps:
+        - uses: actions/checkout@v2
+        - name: Setup php
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: '8.2'
+            tools: composer:v2
+        - name: Copy .env
+          run: cp .env.example .env.testing
+        - name: Install Dependencies
+          if: steps.cache.outputs.cache-hit != 'true'
+          run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        - name: Generate key
+          run: php artisan key:generate --env testing
+        - name: Set hostname
+          run: sudo echo "127.0.0.1" mysql.test" | sudo tee -a /etc/hosts
+        - name: Execute tests (Unit and Feature test) via PHPUnit
+          run: vendoe/test/phpunit
