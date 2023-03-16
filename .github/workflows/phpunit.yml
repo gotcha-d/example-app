@@ -52,6 +52,6 @@ jobs:
       - name: Install nodemodules
         run: npm install
       - name: Build Vite for tests
-        run: npm run dev
+        run: npm run build
       - name: Execute tests (Unit and Feature test) via PHPUnit
         run: vendor/bin/phpunit
