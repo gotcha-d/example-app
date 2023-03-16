@@ -49,7 +49,7 @@ jobs:
         run: php artisan key:generate --env testing
       - name: Set hostname
         run: sudo echo "127.0.0.1 mysql.test" | sudo tee -a /etc/hosts
-      - name: Build Vite for production
-        run: npm run build
+      - name: Build Vite for tests
+        run: npm run dev
       - name: Execute tests (Unit and Feature test) via PHPUnit
         run: vendor/bin/phpunit
